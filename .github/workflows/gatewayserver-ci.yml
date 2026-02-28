@@ -39,5 +39,5 @@ jobs:
 
       - name: Restart gatewayserver deployment
         run: |
-          kubectl --insecure-skip-tls-verify -n ${{ secrets.K8S_NAMESPACE || 'default' }} rollout restart deployment/gatewayserver
-          kubectl --insecure-skip-tls-verify -n ${{ secrets.K8S_NAMESPACE || 'default' }} rollout status deployment/gatewayserver
+          kubectl --insecure-skip-tls-verify -n default rollout restart deployment/gateway
+          kubectl --insecure-skip-tls-verify -n default rollout status deployment/gateway
