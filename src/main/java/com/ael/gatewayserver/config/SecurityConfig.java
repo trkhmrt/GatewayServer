@@ -22,6 +22,7 @@ public class SecurityConfig {
                                 "/ael/authservice/auth/login",
                                 "/ael/authservice/auth/register",
                                 "/ael/authservice/auth/refreshAccessToken",
+                                "/ael/authservice/auth/google/login", 
                                 "/ael/productservice/**",
                                 "/ael/customerservice/**",
                                 "/ael/basketservice/**",
