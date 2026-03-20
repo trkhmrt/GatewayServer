@@ -42,50 +42,27 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 return onError(exchange, "Missing or empty token", HttpStatus.UNAUTHORIZED);
             }
 
-            // Önce Authorization header'ı kontrol et
-            String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-
-
-                if (token.isEmpty()) {
-                    logger.warn("Empty token found in Authorization header");
-                    return onError(exchange, "Empty token", HttpStatus.UNAUTHORIZED);
-                }
-
-                logger.debug("Token found in Authorization header.");
-            }
-
             // Token'ı doğrula
             if (!jwtUtil.validateToken(token)) {
                 logger.warn("Invalid token provided");
                 return onError(exchange, "Invalid token", HttpStatus.UNAUTHORIZED);
             }
 
-            // 3. Token'dan UUID'yi çıkar
-            String uuid = jwtUtil.extractUUID(token);
-            if (uuid == null) {
-                logger.warn("UUID not found in token");
-                return onError(exchange, "Invalid token content", HttpStatus.UNAUTHORIZED);
-            }
 
             try {
-                // Token'dan bilgileri çıkar
-                String username = jwtUtil.extractUsername(token);
-                String role = jwtUtil.extractRole(token);
-                Integer customerId = jwtUtil.extractCustomerId(token);
+                Integer userId = jwtUtil.extractUserId(token);
 
-                if(username == null || customerId == null) {
+                if(userId == null) {
                     logger.warn("Failed to extract required information from token");
                     return onError(exchange, "Invalid token content", HttpStatus.UNAUTHORIZED);
                 }
 
-                logger.debug("Token validated successfully for user: {}, role: {}, customerId: {}", username, role, customerId);
+                logger.debug("Token validated successfully for userId: {}",userId);
 
                 // Request header'larına bilgileri ekle
                 ServerHttpRequest modifiedRequest = request.mutate()
-                        .header("X-User-Name", username)
-                        .header("X-User-Role", role)
-                        .header("X-Customer-Id", customerId.toString())
+                        .header("X-User-Role", jwtUtil.extractRole(token))
+                        .header("X-User-Id", userId.toString())
                         .build();
 
 
@@ -105,7 +82,6 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     }
 
     private String extractToken(ServerHttpRequest request) {
-        // 1. Authorization Header'dan
         String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);

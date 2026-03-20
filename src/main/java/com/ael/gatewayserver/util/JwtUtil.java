@@ -76,11 +76,11 @@ public class JwtUtil {
         }
     }
 
-    public Integer extractCustomerId(String token) {
+    public Integer extractUserId(String token) {
         try {
-            return extractClaim(token, claims -> claims.get("customerId", Integer.class));
+            return extractClaim(token, claims -> claims.get("userId", Integer.class));
         } catch (Exception e) {
-            logger.error("Failed to extract customerId from token: {}", e.getMessage(), e);
+            logger.error("Failed to extract userId from token: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -107,11 +107,11 @@ public class JwtUtil {
                 .getBody();
     }
 
-    public String extractUUID(String token) {
+    public String extractSessionId(String token) {
         try {
-            return extractClaim(token, claims -> claims.get("UUID", String.class));
+            return extractClaim(token, claims -> claims.get("session_id", String.class));
         } catch (Exception e) {
-            logger.error("Failed to extract UUID from token: {}", e.getMessage(), e);
+            logger.error("Failed to extract session_id from token: {}", e.getMessage(), e);
             return null;
         }
     }
