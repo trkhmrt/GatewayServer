@@ -4,4 +4,3 @@ com/ael/gatewayserver/filter/JwtAuthenticationFilter.class
 com/ael/gatewayserver/filter/JwtAuthenticationFilter$Config.class
 com/ael/gatewayserver/util/JwtUtil.class
 com/ael/gatewayserver/config/CorsConfig.class
-com/ael/gatewayserver/controller/TestController.class

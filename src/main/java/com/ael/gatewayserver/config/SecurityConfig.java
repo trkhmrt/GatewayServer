@@ -19,20 +19,20 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers(
-                                "/ael/authservice/auth/login",
-                                "/ael/authservice/auth/register",
-                                "/ael/authservice/auth/refreshAccessToken",
-                                "/ael/authservice/auth/google/login", 
-                                "/ael/productservice/**",
-                                "/ael/customerservice/**",
-                                "/ael/basketservice/**",
-                                "/ael/paymentservice/**",
-                                "/ael/orderservice/**",
+                                "/authservice/auth/login",
+                                "/authservice/auth/register",
+                                "/authservice/auth/google/login",
+                                "/productservice/**",
+                                "/authservice/auth/refreshAccessToken",
+                                "/customerservice/**",
+                                "/basketservice/**",
+                                "/paymentservice/**",
+                                "/orderservice/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-                        .anyExchange().authenticated()
+                        .anyExchange().permitAll()
                 );
         return http.build();
     }

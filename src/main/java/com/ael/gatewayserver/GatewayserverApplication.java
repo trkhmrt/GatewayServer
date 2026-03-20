@@ -31,66 +31,73 @@ public class GatewayserverApplication {
 	public RouteLocator greenProjectRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		return routeLocatorBuilder.routes()
 				.route(p -> p
-						.path("/ael/authservice/auth/login", "/ael/authservice/auth/register")
+						.path("/authservice/auth/login", "/ael/authservice/auth/register")
 						.filters(f -> f.rewritePath("/ael/authservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 						)
 						.uri("lb://AUTHSERVICE"))
 // 2. Protected auth endpoint'leri - JWT filter VAR
 				.route(p -> p
-						.path("/ael/authservice/**")
+						.path("/authservice/**")
 						.filters(f -> f.rewritePath("/ael/authservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 						)
 						.uri("lb://AUTHSERVICE"))
 				.route(p -> p
-						.path("/ael/customerservice/**")
+						.path("/customerservice/**")
 						.filters( f -> f.rewritePath("/ael/customerservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 						)
 						.uri("lb://CUSTOMERSERVICE"))
 				.route(p -> p
-						.path("/ael/basketservice/basket/addProductToGuestBasket/**")
+						.path("/basketservice/basket/addProductToGuestBasket/**")
 						.filters(f -> f.rewritePath("/ael/basketservice/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://BASKETSERVICE"))
 				.route(p -> p
-						.path("/ael/basketservice/basket/getGuestbasket/**")
+						.path("/basketservice/basket/getGuestbasket/**")
 						.filters(f -> f.rewritePath("/ael/basketservice/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://BASKETSERVICE"))
 				.route(p -> p
-						.path("/ael/basketservice/**")
+						.path("/basketservice/**")
 						.filters( f -> f.rewritePath("/ael/basketservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
 						.uri("lb://BASKETSERVICE"))
 				.route(p -> p
-						.path("/ael/paymentservice/payment/3ds/callback")
+						.path("/paymentservice/payment/3ds/callback")
 						.filters( f -> f.rewritePath("/ael/paymentservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								)
 						.uri("lb://PAYMENTSERVICE"))
 				.route(p -> p
-						.path("/ael/paymentservice/payment/3ds/Initialize")
+						.path("/paymentservice/payment/3ds/Initialize")
 						.filters( f -> f.rewritePath("/ael/paymentservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config())))
 						.uri("lb://PAYMENTSERVICE"))
 				.route(p -> p
-						.path("/ael/productservice/**")
+						.path("/productservice/**")
 						.filters( f -> f.rewritePath("/ael/productservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://PRODUCTSERVICE"))
 				.route(p -> p
-						.path("/ael/orderservice/**")
+						.path("/orderservice/**")
 						.filters( f -> f.rewritePath("/ael/orderservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 						)
 						.uri("lb://ORDERSERVICE"))
+				.route(p -> p
+						.path("/qr/**")
+						.filters( f -> f
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+						)
+						.uri("lb://ALGORYQR-SERVICE"))
 				.build();
 
 	}
