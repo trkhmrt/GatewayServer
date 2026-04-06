@@ -92,7 +92,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         }
 
         // 2. Cookie'den
-        HttpCookie cookie = request.getCookies().getFirst("access_token");
+        HttpCookie cookie = request.getCookies().getFirst("algory_access_token");
         if (cookie != null && !cookie.getValue().isEmpty()) {
             logger.debug("Token found in cookie");
             return cookie.getValue();

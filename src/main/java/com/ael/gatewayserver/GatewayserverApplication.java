@@ -31,15 +31,21 @@ public class GatewayserverApplication {
 	public RouteLocator greenProjectRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		return routeLocatorBuilder.routes()
 				.route(p -> p
-						.path("/authservice/auth/login", "/ael/authservice/auth/register")
-						.filters(f -> f.rewritePath("/ael/authservice/(?<segment>.*)","/${segment}")
+						.path("/authservice/basicauth/**", "/authservice/google-auth/**")
+						.filters(f -> f.rewritePath("/authservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 						)
 						.uri("lb://AUTHSERVICE"))
-// 2. Protected auth endpoint'leri - JWT filter VAR
 				.route(p -> p
-						.path("/authservice/**")
-						.filters(f -> f.rewritePath("/ael/authservice/(?<segment>.*)","/${segment}")
+						.path("/authservice/2fa/**")
+						.filters(f -> f.rewritePath("/authservice/(?<segment>.*)","/${segment}")
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+						)
+						.uri("lb://AUTHSERVICE"))
+				.route(p -> p
+						.path("/authservice/account/**")
+						.filters(f -> f.rewritePath("/authservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 						)
