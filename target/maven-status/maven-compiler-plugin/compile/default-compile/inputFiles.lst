@@ -1,5 +1,4 @@
 /home/tarik/Masaüstü/Services/GatewayServer/src/main/java/com/ael/gatewayserver/GatewayserverApplication.java
-/home/tarik/Masaüstü/Services/GatewayServer/src/main/java/com/ael/gatewayserver/config/CorsConfig.java
 /home/tarik/Masaüstü/Services/GatewayServer/src/main/java/com/ael/gatewayserver/config/SecurityConfig.java
 /home/tarik/Masaüstü/Services/GatewayServer/src/main/java/com/ael/gatewayserver/filter/JwtAuthenticationFilter.java
 /home/tarik/Masaüstü/Services/GatewayServer/src/main/java/com/ael/gatewayserver/util/JwtUtil.java

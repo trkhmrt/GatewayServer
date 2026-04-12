@@ -5,6 +5,31 @@ spring:
     allow-circular-references: true
   cloud:
     gateway:
+      # Tarayıcı CORS: tüm rotalara uygulanır (login dahil). allowCredentials=false + "*" güvenli ve
+      # Authorization header’lı isteklerle uyumludur (çerez taşımıyorsanız).
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+              - HEAD
+            allowedHeaders: "*"
+            allowCredentials: false
+            maxAge: 3600
+            exposedHeaders:
+              - Authorization
+              - X-User-Id
+              - X-User-Role
+              - X-Response-Time
+      default-filters:
+        # Gateway + downstream aynı CORS başlığını iki kez eklerse tarayıcı reddeder.
+        - "DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Access-Control-Allow-Headers"
       httpclient:
         connect-timeout: 1000
         response-timeout: 10s
