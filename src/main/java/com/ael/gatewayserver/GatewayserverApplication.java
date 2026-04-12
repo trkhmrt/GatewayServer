@@ -51,6 +51,13 @@ public class GatewayserverApplication {
 						)
 						.uri("lb://AUTHSERVICE"))
 				.route(p -> p
+						.path("/authservice/admin/**")
+						.filters(f -> f.rewritePath("/authservice/(?<segment>.*)", "/${segment}")
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+						)
+						.uri("lb://AUTHSERVICE"))
+				.route(p -> p
 						.path("/customerservice/**")
 						.filters( f -> f.rewritePath("/ael/customerservice/(?<segment>.*)","/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
@@ -104,6 +111,13 @@ public class GatewayserverApplication {
 								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
 						)
 						.uri("lb://ALGORYQR-SERVICE"))
+				.route(p -> p
+						.path("/rent/**")
+						.filters(f -> f.rewritePath("/rent/(?<segment>.*)", "/${segment}")
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+						)
+						.uri("lb://ALGORYCODE-RENT-SERVICE"))
 				.build();
 
 	}
