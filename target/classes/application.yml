@@ -29,7 +29,7 @@ spring:
               - X-Response-Time
       default-filters:
         # Gateway + downstream aynı CORS başlığını iki kez eklerse tarayıcı reddeder.
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Access-Control-Allow-Headers
+        - "DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Access-Control-Allow-Headers"
       httpclient:
         connect-timeout: 1000
         response-timeout: 10s
