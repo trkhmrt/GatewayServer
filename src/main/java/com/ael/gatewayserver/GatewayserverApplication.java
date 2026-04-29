@@ -94,6 +94,13 @@ public class GatewayserverApplication {
 						)
 						.uri("lb://ALGORYCODE-RENT-SERVICE"))
 				.route(p -> p
+						.path("/rent/vehicle-statuses", "/rent/vehicle-statuses/**")
+						.filters(f -> f
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.filter(jwtAuthenticationFilter.apply(new JwtAuthenticationFilter.Config()))
+						)
+						.uri("lb://ALGORYCODE-RENT-SERVICE"))
+				.route(p -> p
 						.path("/rent/**")
 						.filters(f -> f.rewritePath("/rent/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
