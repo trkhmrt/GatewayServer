@@ -52,10 +52,6 @@
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
@@ -117,7 +113,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>tarikhamarat/gatewayserver:s19</image>
+						<image>tarikhamarat/gatewayserver:latest</image>
 					</to>
 				</configuration>
 			</plugin>

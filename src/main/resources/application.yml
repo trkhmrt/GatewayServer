@@ -72,11 +72,11 @@ logging:
 server:
   port: 8072
 
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: "http://localhost:8070/eureka/"
+app:
+  services:
+    auth:
+      uri: ${APP_SERVICES_AUTH_URI:http://authservice.default.svc.cluster.local:8080}
+    qr:
+      uri: ${APP_SERVICES_QR_URI:http://algoryqr-service.default.svc.cluster.local:8080}
+    rent:
+      uri: ${APP_SERVICES_RENT_URI:http://prod-rent-algorycode-rent-service.algory-prod.svc.cluster.local:8090}
